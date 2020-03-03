@@ -13,14 +13,25 @@
 								name="login"
 								type="text"
 								prepend-icon="mdi-account"
+								outlined
+								clearable
+								clear-icon="mdi-close"
 							/>
 							<v-text-field
-								id="password"
+								:append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+								:rules="[rules.required, rules.min]"
+								:type="show ? 'text' : 'password'"
+								name="input-10-2"
 								label="Password"
-								name="password"
-								type="password"
+								hint="At least 8 characters"
+								class="input-group--focused"
+								value=""
+								@click:append="show = !show"
 								prepend-icon="mdi-lock"
-							/>
+								outlined
+								clearable
+								clear-icon="mdi-close"
+							></v-text-field>
 						</v-form>
 					</v-card-text>
 					<v-card-actions>
@@ -33,7 +44,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			show: false,
+			password: "Password",
+			rules: {
+				required: (value) => !!value || "Required.",
+				min: (v) => v.length >= 8 || "Min 8 characters",
+				emailMatch: () => "The email and password you entered don't match"
+			}
+		};
+	}
+};
 </script>
 
 <style></style>
